@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yale.zc.funding.dao.CrowdFundingMapper">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.yale.zc.funding.bean.CrowdFunding" id="crowdFundingMap">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="publisherId" column="publisher_id"/>
+        <result property="headImageUrl" column="head_image_url"/>
+        <result property="enrolEndDate" column="enrol_end_date"/>
+        <result property="startDate" column="start_date"/>
+        <result property="limitNum" column="limit_num"/>
+        <result property="amount" column="amount"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="otherArea" column="other_area"/>
+        <result property="declaration" column="declaration"/>
+        <result property="supportDeclaration" column="support_declaration"/>
+        <result property="details" column="details"/>
+        <result property="related" column="related"/>
+        <result property="standard" column="standard"/>
+        <result property="lng" column="lng"/>
+        <result property="lat" column="lat"/>
+        <result property="viewCount" column="view_count"/>
+        <result property="shareCount" column="share_count"/>
+        <result property="favoriteCount" column="favorite_count"/>
+        <result property="topFix" column="top_fix"/>
+        <result property="status" column="status"/>
+        <result property="customFields" column="custom_fields" typeHandler="com.yale.zc.core.util.JsonTypeHandler"/>
+        <result property="createdAt" column="created_at"/>
+        <result property="updatedAt" column="updated_at"/>
+    </resultMap>
+
+	<select id="queryObject"  parameterType="java.lang.String" resultMap="crowdFundingMap">
+		select * from crowd_funding where id = #{value}
+	</select>
+
+	<select id="queryAll"  parameterType="java.lang.String" resultMap="crowdFundingMap">
+		select * from crowd_funding order by updated_at
+	</select>
+
+	<select id="queryAllVo"  resultType="com.yale.zc.funding.vo.CrowdFundingVo">
+		select c.*,count(distinct e.id) as enrolmentNum,count(distinct s.supported_id)as supportNum,TO_DAYS(c.enrol_end_date)-TO_DAYS(NOW()) as remainingDays
+		from crowd_funding c left join enrolment e on c.id=e.funding_id left join support_item s on c.id=s.funding_id
+		group by c.id order by c.updated_at
+	</select>
+
+	<select id="queryList" resultType="com.yale.zc.funding.bean.CrowdFunding">
+		select * from crowd_funding
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from crowd_funding 
+	</select>
+	 
+	<insert id="save" parameterType="com.yale.zc.funding.bean.CrowdFunding">
+		insert into crowd_funding
+		(
+			`id`, 
+			`title`, 
+			`publisher_id`, 
+			`head_image_url`,
+			`enrol_end_date`, 
+			`start_date`, 
+			`limit_num`, 
+			`amount`, 
+			`province`, 
+			`city`, 
+			`other_area`, 
+			`declaration`, 
+			`support_declaration`, 
+			`details`, 
+			`related`, 
+			`standard`, 
+			`lng`, 
+			`lat`, 
+			`view_count`, 
+			`share_count`, 
+			`favorite_count`, 
+			`top_fix`, 
+			`status`, 
+			`custom_fields`, 
+			`created_at`, 
+			`updated_at`
+		)
+		values
+		(
+			#{id}, 
+			#{title}, 
+			#{publisherId}, 
+			#{headImageUrl},
+			#{enrolEndDate}, 
+			#{startDate}, 
+			#{limitNum}, 
+			#{amount}, 
+			#{province}, 
+			#{city}, 
+			#{otherArea}, 
+			#{declaration}, 
+			#{supportDeclaration}, 
+			#{details}, 
+			#{related}, 
+			#{standard}, 
+			#{lng}, 
+			#{lat}, 
+			#{viewCount}, 
+			#{shareCount}, 
+			#{favoriteCount}, 
+			#{topFix}, 
+			#{status}, 
+			#{customFields}, 
+			#{createdAt}, 
+			#{updatedAt}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.yale.zc.funding.bean.CrowdFunding">
+		update crowd_funding 
+		<set>
+			<if test="title != null">`title` = #{title}, </if>
+			<if test="publisherId != null">`publisher_id` = #{publisherId}, </if>
+			<if test="headImageUrl != null">`head_image_url` = #{headImageUrl}, </if>
+			<if test="enrolEndDate != null">`enrol_end_date` = #{enrolEndDate}, </if>
+			<if test="startDate != null">`start_date` = #{startDate}, </if>
+			<if test="limitNum != null">`limit_num` = #{limitNum}, </if>
+			<if test="amount != null">`amount` = #{amount}, </if>
+			<if test="province != null">`province` = #{province}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="otherArea != null">`other_area` = #{otherArea}, </if>
+			<if test="declaration != null">`declaration` = #{declaration}, </if>
+			<if test="supportDeclaration != null">`support_declaration` = #{supportDeclaration}, </if>
+			<if test="details != null">`details` = #{details}, </if>
+			<if test="related != null">`related` = #{related}, </if>
+			<if test="standard != null">`standard` = #{standard}, </if>
+			<if test="lng != null">`lng` = #{lng}, </if>
+			<if test="lat != null">`lat` = #{lat}, </if>
+			<if test="viewCount != null">`view_count` = #{viewCount}, </if>
+			<if test="shareCount != null">`share_count` = #{shareCount}, </if>
+			<if test="favoriteCount != null">`favorite_count` = #{favoriteCount}, </if>
+			<if test="topFix != null">`top_fix` = #{topFix}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="customFields != null">`custom_fields` = #{customFields}, </if>
+			<if test="createdAt != null">`created_at` = #{createdAt}, </if>
+			<if test="updatedAt != null">`updated_at` = #{updatedAt}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from crowd_funding where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from crowd_funding where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

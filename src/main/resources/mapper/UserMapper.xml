@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yale.zc.user.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.yale.zc.user.bean.User">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="realname" jdbcType="VARCHAR" property="realname" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="head_image_url" jdbcType="VARCHAR" property="headImageUrl" />
+    <result column="qrcode_url" jdbcType="VARCHAR" property="qrcodeUrl" />
+    <result column="referee_id" jdbcType="VARCHAR" property="refereeId" />
+    <result column="id_card_no" jdbcType="VARCHAR" property="idCardNo" />
+    <result column="id_card_url" jdbcType="VARCHAR" property="idCardUrl" />
+    <result column="realname_cert_status" jdbcType="INTEGER" property="realnameCertStatus" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result property="isReceivedMsg" jdbcType="INTEGER" column="is_received_msg"/>
+    <result property="city" jdbcType="VARCHAR" column="city"/>
+    <result property="company" jdbcType="VARCHAR" column="company"/>
+    <result property="position" jdbcType="VARCHAR" column="position"/>
+    <result property="industry" jdbcType="VARCHAR" column="industry"/>
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, username, password, phone, realname, referee_id,id_card_no, id_card_url, sex,head_image_url,qrcode_url,referee_id,realname_cert_status,
+    nickname,is_received_msg,city,company,position, industry,created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByPhone" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where phone = #{phone,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByRealnameCertStatus" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+    where realname_cert_status = #{status,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yale.zc.user.bean.User">
+    insert into user (id, username, password,
+      phone, realname,sex, head_image_url,qrcode_url,referee_id,id_card_no,
+      id_card_url, realname_cert_status, nickname,is_received_msg,city,company,position,industry, created_at, updated_at
+      )
+    values (#{id,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR},  #{sex,jdbcType=VARCHAR},#{headImageUrl,jdbcType=VARCHAR},#{qrcodeUrl,jdbcType=VARCHAR},#{refereeId,jdbcType=VARCHAR},#{idCardNo,jdbcType=VARCHAR},
+      #{idCardUrl,jdbcType=VARCHAR}, #{realnameCertStatus,jdbcType=INTEGER}, #{nickname,jdbcType=VARCHAR}, 
+      #{isReceivedMsg,jdbcType=INTEGER},#{city,jdbcType=VARCHAR},#{company,jdbcType=VARCHAR},#{position,jdbcType=VARCHAR},#{industry,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yale.zc.user.bean.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="username != null">
+        username,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="phone != null">
+        phone,
+      </if>
+      <if test="realname != null">
+        realname,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="headImageUrl != null">
+        head_image_url,
+      </if>
+
+      <if test="qrcodeUrl != null">
+        qrcode_url,
+      </if>
+      <if test="refereeId != null">
+        referee_id,
+      </if>
+      <if test="idCardNo != null">
+        id_card_no,
+      </if>
+      <if test="idCardUrl != null">
+        id_card_url,
+      </if>
+      <if test="realnameCertStatus != null">
+        realname_cert_status,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="isReceivedMsg != null">
+        is_received_msg,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="company != null">
+        company,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="industry != null">
+        industry,
+      </if>
+
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="headImageUrl != null">
+        #{headImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeUrl != null">
+        #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="refereeId != null">
+        #{refereeId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardUrl != null">
+        #{idCardUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="realnameCertStatus != null">
+        #{realnameCertStatus,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="isReceivedMsg != null">
+        #{isReceivedMsg,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yale.zc.user.bean.User">
+    update user
+    <set>
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null">
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="realname != null">
+        realname = #{realname,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="headImageUrl != null">
+        head_image_url = #{headImageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="qrcodeUrl != null">
+        qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="refereeId != null">
+        referee_id = #{refereeId,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardNo != null">
+        id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="idCardUrl != null">
+        id_card_url = #{idCardUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="realnameCertStatus != null">
+        realname_cert_status = #{realnameCertStatus,jdbcType=INTEGER},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="isReceivedMsg != null">
+        is_received_msg = #{isReceivedMsg,jdbcType=INTEGER},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="company != null">
+        company = #{company,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="industry != null">
+        industry = #{industry,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yale.zc.user.bean.User">
+    update user
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      realname = #{realname,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      head_image_url = #{headImageUrl,jdbcType=VARCHAR},
+      qrcode_url = #{qrcodeUrl,jdbcType=VARCHAR},
+      referee_id = #{refereeId,jdbcType=VARCHAR},
+      id_card_no = #{idCardNo,jdbcType=VARCHAR},
+      id_card_url = #{idCardUrl,jdbcType=VARCHAR},
+      realname_cert_status = #{realnameCertStatus,jdbcType=INTEGER},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      is_received_msg = #{isReceivedMsg,jdbcType=INTEGER},
+      city = #{city,jdbcType=VARCHAR},
+      company = #{company,jdbcType=VARCHAR},
+      position = #{position,jdbcType=VARCHAR},
+      industry = #{industry,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

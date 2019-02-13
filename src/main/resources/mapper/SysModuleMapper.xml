@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yale.zc.system.dao.SysModuleMapper">
+  <resultMap id="BaseResultMap" type="com.yale.zc.system.bean.SysModule">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="index" jdbcType="INTEGER" property="index" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="path" jdbcType="VARCHAR" property="path" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, index, description, status, created_at, updated_at, path
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_module
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_module
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yale.zc.system.bean.SysModule">
+    insert into sys_module (id, name, index, 
+      description, status, created_at, 
+      updated_at, path)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{index,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP}, #{path,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yale.zc.system.bean.SysModule">
+    insert into sys_module
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="index != null">
+        index,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null">
+        #{index,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yale.zc.system.bean.SysModule">
+    update sys_module
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="index != null">
+        index = #{index,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yale.zc.system.bean.SysModule">
+    update sys_module
+    set name = #{name,jdbcType=VARCHAR},
+      index = #{index,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      path = #{path,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByModuleName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_module
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_module
+  </select>
+  <select id="selectSelective" parameterType="com.yale.zc.system.bean.SysModule" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_module
+    <where>
+      <if test=" name_!=null">
+        and name LIKE concat(concat('%',#{name}),'%')
+      </if>
+      <if test="index != null">
+        and index = #{index,jdbcType=INTEGER},
+      </if>
+      <if test="description!= null">
+        and description LIKE concat(concat('%',#{description}),'%')
+      </if>
+      <if test="status!= null">
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="createdAt!= null">
+        and created_at = #{createdAt,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedAt!= null">
+        and updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+  <update id="changeModuleStatusByPrimaryKey" parameterType="com.yale.zc.system.bean.SysModule">
+    update sys_module
+    set status = #{status,jdbcType=INTEGER}
+    where id= #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

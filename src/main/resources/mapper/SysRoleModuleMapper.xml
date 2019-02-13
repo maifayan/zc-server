@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yale.zc.system.dao.SysRoleModuleMapper">
+  <resultMap id="BaseResultMap" type="com.yale.zc.system.bean.SysRoleModule">
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="module_id" jdbcType="VARCHAR" property="moduleId" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+  	role_id, module_id, created_at, updated_at
+  
+  </sql>
+  <select id="selectByRoleId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_module
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </select>  
+  <insert id="insert" parameterType="com.yale.zc.system.bean.SysRoleModule">
+    insert into sys_role_module (role_id, module_id, created_at, 
+      updated_at)
+    values (#{roleId,jdbcType=VARCHAR}, #{moduleId,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yale.zc.system.bean.SysRoleModule">
+    insert into sys_role_module
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="moduleId != null">
+        module_id,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="moduleId != null">
+        #{moduleId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <delete id="deleteByRoleId" parameterType="java.lang.String">
+    delete from sys_role_module
+    where role_id = #{roleId,jdbcType=VARCHAR}
+  </delete>
+  <select id="selectByMoudleId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role_module
+    where module_id = #{moduleId,jdbcType=VARCHAR}
+  </select>
+  
+</mapper>

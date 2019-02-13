@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yale.zc.funding.dao.FundingCommentMapper" >
+  <resultMap id="BaseResultMap" type="com.yale.zc.funding.bean.FundingComment" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="reply_user_id" property="replyUserId" jdbcType="VARCHAR" />
+    <result column="funding_id" property="fundingId" jdbcType="VARCHAR" />
+    <result column="enrolment_id" property="enrolmentId" jdbcType="VARCHAR" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, content, user_id, reply_user_id, funding_id, enrolment_id, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from funding_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findByEnrolment" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from funding_comment
+    where funding_id = #{fundingId,jdbcType=VARCHAR} and enrolment_id = #{enrolmentId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from funding_comment
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yale.zc.funding.bean.FundingComment" >
+    insert into funding_comment (id, content, user_id, 
+      reply_user_id, funding_id, enrolment_id, 
+      created_at, updated_at)
+    values (#{id,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, 
+      #{replyUserId,jdbcType=VARCHAR}, #{fundingId,jdbcType=VARCHAR}, #{enrolmentId,jdbcType=VARCHAR}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yale.zc.funding.bean.FundingComment" >
+    insert into funding_comment
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="replyUserId != null" >
+        reply_user_id,
+      </if>
+      <if test="fundingId != null" >
+        funding_id,
+      </if>
+      <if test="enrolmentId != null" >
+        enrolment_id,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="replyUserId != null" >
+        #{replyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingId != null" >
+        #{fundingId,jdbcType=VARCHAR},
+      </if>
+      <if test="enrolmentId != null" >
+        #{enrolmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yale.zc.funding.bean.FundingComment" >
+    update funding_comment
+    <set >
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="replyUserId != null" >
+        reply_user_id = #{replyUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingId != null" >
+        funding_id = #{fundingId,jdbcType=VARCHAR},
+      </if>
+      <if test="enrolmentId != null" >
+        enrolment_id = #{enrolmentId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yale.zc.funding.bean.FundingComment" >
+    update funding_comment
+    set content = #{content,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=VARCHAR},
+      reply_user_id = #{replyUserId,jdbcType=VARCHAR},
+      funding_id = #{fundingId,jdbcType=VARCHAR},
+      enrolment_id = #{enrolmentId,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

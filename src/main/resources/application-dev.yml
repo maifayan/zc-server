@@ -1,0 +1,63 @@
+spring:
+  datasource:
+    name: yale-zc
+
+    url: jdbc:mysql://192.168.0.120:3306/yale-zc?useUnicode=true&characterEncoding=utf8&useSSL=true&zeroDateTimeBehavior=convertToNull
+
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.jdbc.Driver
+    dbcp2:
+      connection-init-sqls: set names utf8mb4;
+  redis:
+    database: 0
+    host: 192.168.0.122
+    port: 6379
+    password: 123456
+    timeout: 0
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+
+
+server:
+  port: 8082
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.yale.zc.**.bean
+redis:
+  user-session-key: REDIS_ZC_USER_SESSION
+  sys-user-session-key: REDIS_ZC_SYS_USER_SESSION
+  sms-prefix: REDIS_SMS
+  sms-protection-prefix: REDIS_ZC_SMS_PROTECTION
+  session-expire: 2592000
+  sms-expire: 1800
+  sms-protection-expire: 40
+  sms-validate: SMS_8125152
+  sms-notify-validate: SMS_115125114
+weixin:
+  appid: wxede20d9286db6756
+  appsecret: b548de5f324a3abc9cab2d9d32c49e15
+  oauth:
+    auth-url: https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT_URI?refereeId=REFEREEID&response_type=code&scope=SCOPE&state=STATE#wechat_redirect
+    scope: snsapi_userinfo
+    callback-url: http://tietie.natapp1.cc/weixin/callback
+    token-url: https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code
+    info-url: https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN
+    oauth-redirect-url: http://192.168.0.104:8080/?token=
+  share:
+    access-token-url: https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=SECRET
+    ticket-url: https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi
+
+qiniu:
+  ak: Nwn_zTH3ac2T6Swu3MhQe39Nk7efWiK2ZmoNVcZo
+  sk: EnM2r-WYJFdHhYapQQ8_uSqbHh0ICJxofCBPKQJ5
+  bucket: yale-tietie
+  callback: http://tietie.natapp1.cc/qiniu/callback
+  domain: http://onzb85cov.bkt.clouddn.com
+  body: "{\"key\":\"$(key)\",\"hash\":\"$(etag)\",\"bucket\":\"$(bucket)\",\"fsize\":$(fsize)}"
+  qrcodeurl: https://www.fanggongxin.net?useId=
+  qrcodetemppath: e://temp
+

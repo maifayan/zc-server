@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yale.zc.system.dao.UserCertLogMapper">
+  <resultMap id="BaseResultMap" type="com.yale.zc.system.bean.UserCertLog">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="method" jdbcType="INTEGER" property="method" />
+    <result column="sys_user_id" jdbcType="VARCHAR" property="sysUserId" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="result" jdbcType="INTEGER" property="result" />
+    <result column="comment" jdbcType="VARCHAR" property="comment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, method, sys_user_id, created_at, updated_at, result, comment
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_cert_log
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_cert_log
+  </select>
+  <select id="selectBySysUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_cert_log
+    where sys_user_id = #{sysUserId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByUserId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from user_cert_log
+    where user_id = #{userId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user_cert_log
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yale.zc.system.bean.UserCertLog">
+    insert into user_cert_log (id, user_id, method,
+      sys_user_id, created_at, updated_at,
+      result, comment)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{method,jdbcType=INTEGER}, 
+      #{sysUserId,jdbcType=VARCHAR}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{result,jdbcType=INTEGER}, #{comment,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yale.zc.system.bean.UserCertLog">
+    insert into user_cert_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="method != null">
+        method,
+      </if>
+      <if test="sysUserId != null">
+        sys_user_id,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="result != null">
+        result,
+      </if>
+      <if test="comment != null">
+        comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        #{method,jdbcType=INTEGER},
+      </if>
+      <if test="sysUserId != null">
+        #{sysUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null">
+        #{result,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        #{comment,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yale.zc.system.bean.UserCertLog">
+    update user_cert_log
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="method != null">
+        method = #{method,jdbcType=INTEGER},
+      </if>
+      <if test="sysUserId != null">
+        sys_user_id = #{sysUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="result != null">
+        result = #{result,jdbcType=INTEGER},
+      </if>
+      <if test="comment != null">
+        comment = #{comment,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id_ = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yale.zc.system.bean.UserCertLog">
+    update user_cert_log
+    set user_id = #{userId,jdbcType=VARCHAR},
+      method = #{method,jdbcType=INTEGER},
+      sys_user_id = #{sysUserId,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      result = #{result,jdbcType=INTEGER},
+      comment = #{comment,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

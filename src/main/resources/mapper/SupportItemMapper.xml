@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yale.zc.funding.dao.SupportItemMapper" >
+  <resultMap id="BaseResultMap" type="com.yale.zc.funding.bean.SupportItem" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="supported_id" property="supportedId" jdbcType="VARCHAR" />
+    <result column="funding_id" property="fundingId" jdbcType="VARCHAR" />
+    <result column="amount" property="amount" jdbcType="DOUBLE" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, supported_id, funding_id, amount, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from support_item
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="findByUser" resultMap="BaseResultMap" parameterType="java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from support_item
+    where user_id = #{userId,jdbcType=VARCHAR} and funding_id =  #{fundingId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from support_item
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yale.zc.funding.bean.SupportItem" >
+    insert into support_item (id, user_id, supported_id, 
+      funding_id, amount, created_at, 
+      updated_at)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{supportedId,jdbcType=VARCHAR}, 
+      #{fundingId,jdbcType=VARCHAR}, #{amount,jdbcType=DOUBLE}, #{createdAt,jdbcType=TIMESTAMP}, 
+      #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yale.zc.funding.bean.SupportItem" >
+    insert into support_item
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="supportedId != null" >
+        supported_id,
+      </if>
+      <if test="fundingId != null" >
+        funding_id,
+      </if>
+      <if test="amount != null" >
+        amount,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="supportedId != null" >
+        #{supportedId,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingId != null" >
+        #{fundingId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yale.zc.funding.bean.SupportItem" >
+    update support_item
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="supportedId != null" >
+        supported_id = #{supportedId,jdbcType=VARCHAR},
+      </if>
+      <if test="fundingId != null" >
+        funding_id = #{fundingId,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null" >
+        amount = #{amount,jdbcType=DOUBLE},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yale.zc.funding.bean.SupportItem" >
+    update support_item
+    set user_id = #{userId,jdbcType=VARCHAR},
+      supported_id = #{supportedId,jdbcType=VARCHAR},
+      funding_id = #{fundingId,jdbcType=VARCHAR},
+      amount = #{amount,jdbcType=DOUBLE},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

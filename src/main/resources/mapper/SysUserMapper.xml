@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yale.zc.system.dao.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.yale.zc.system.bean.SysUser">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="dept" jdbcType="VARCHAR" property="dept" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="sex" jdbcType="INTEGER" property="sex" />
+    <result column="logo" jdbcType="VARCHAR" property="logo" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+    <result column="sys_role_id" jdbcType="VARCHAR" property="sysRoleId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, account, password, dept, name, sex, logo, mobile, telephone, email, 
+    status, created_at, updated_at, sys_role_id
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where account = #{account,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_user
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yale.zc.system.bean.SysUser">
+    insert into sys_user (id, account, password, 
+      dept, name, sex, logo, 
+      mobile, telephone, email, 
+      status, created_at, updated_at, 
+      sys_role_id)
+    values (#{id,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{dept,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, #{logo,jdbcType=VARCHAR}, 
+      #{mobile,jdbcType=VARCHAR}, #{telephone,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
+      #{status,jdbcType=INTEGER}, #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP}, 
+      #{sysRoleId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yale.zc.system.bean.SysUser">
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="dept != null">
+        dept,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="logo != null">
+        logo,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+      <if test="sysRoleId != null">
+        sys_role_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null">
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysRoleId != null">
+        #{sysRoleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yale.zc.system.bean.SysUser">
+    update sys_user
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="dept != null">
+        dept = #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="logo != null">
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sysRoleId != null">
+        sys_role_id = #{sysRoleId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id_ = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yale.zc.system.bean.SysUser">
+    update sys_user
+    set account = #{account,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      dept = #{dept,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=INTEGER},
+      logo = #{logo,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      sys_role_id = #{sysRoleId,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="checkExistUserAccountByUserId" parameterType="com.yale.zc.system.bean.SysUser" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_user
+    where account = #{account,jdbcType=VARCHAR}
+    and id != #{id,jdbcType=VARCHAR}
+  </select>
+  <update id="updateAccountInvalidByPrimeryKey" parameterType="com.yale.zc.system.bean.SysUser">
+    update sys_user
+    set status = #{status,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectAllUserOrderByStatus"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+    order by status asc
+  </select>
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+  </select>
+  <select id="selectSelective" parameterType="com.yale.zc.system.bean.SysUser" resultMap="BaseResultMap">
+	    select 
+	    <include refid="Base_Column_List"/>
+	    from sys_user
+	    <where>
+			<if test="account!=null">
+              and account like concat(concat('%',#{account}),'%')
+			</if>
+			<if test="dept!=null">
+				and dept = #{dept,jdbcType=VARCHAR}
+			</if>
+			<if test="name!=null">
+				and name LIKE concat(concat('%',#{name}),'%')
+			</if>
+			<if test="sex!=null">
+				and sex = #{sex,jdbcType=INTEGER}
+			</if>
+			<if test="mobile!= null">
+				and mobile = LIKE concat(concat('%',#{mobile}),'%')
+			</if>
+			<if test="telephone!=null">
+				and telephone LIKE concat(concat('%',#{telephone}),'%')
+			</if>
+			<if test="email!=null">
+				and email LIKE concat(concat('%',#{email}),'%')
+			</if>
+			<if test="status!=null">
+				and status = #{status,jdbcType=INTEGER}
+			</if>
+			<if test="createdAt!=null">
+				and created_at = #{createdAt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="updatedAt!=null">
+				and updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+			</if>
+			<if test="sysRoleId!=null">
+				and sys_role_id = #{sysRoleId,jdbcType=VARCHAR}
+			</if>
+		</where>
+	</select>  
+</mapper>

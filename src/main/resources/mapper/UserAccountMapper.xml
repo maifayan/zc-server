@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yale.zc.user.dao.UserAccountMapper">
+  <resultMap id="BaseResultMap" type="com.yale.zc.user.bean.UserAccount">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="balance" jdbcType="DOUBLE" property="balance" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, balance, created_at, updated_at
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user_account
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from user_account
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yale.zc.user.bean.UserAccount">
+    insert into user_account (id, user_id, balance,
+      created_at, updated_at)
+    values (#{id,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{balance,jdbcType=DOUBLE}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yale.zc.user.bean.UserAccount">
+    insert into user_account
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yale.zc.user.bean.UserAccount">
+    update user_account
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DOUBLE},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id_ = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yale.zc.user.bean.UserAccount">
+    update user_account
+    set user_id = #{userId,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=DOUBLE},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

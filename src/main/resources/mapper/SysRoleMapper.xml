@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yale.zc.system.dao.SysRoleMapper">
+  <resultMap id="BaseResultMap" type="com.yale.zc.system.bean.SysRole">
+    <id column="id" jdbcType="VARCHAR" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="created_at" jdbcType="TIMESTAMP" property="createdAt" />
+    <result column="updated_at" jdbcType="TIMESTAMP" property="updatedAt" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, status, created_at, updated_at_
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_role
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.yale.zc.system.bean.SysRole">
+    insert into sys_role (id, name, status, 
+      created_at, updated_at)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{updatedAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yale.zc.system.bean.SysRole">
+    insert into sys_role
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createdAt != null">
+        created_at,
+      </if>
+      <if test="updatedAt != null">
+        updated_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yale.zc.system.bean.SysRole">
+    update sys_role
+    <set>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null">
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedAt != null">
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yale.zc.system.bean.SysRole">
+    update sys_role
+    set name = #{name,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectByRoleName" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    order by status desc
+  </select>
+  <select id="confirmRoleName" parameterType="com.yale.zc.system.bean.SysRole" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List"/>
+    from sys_role
+    where name=#{name,jdbcType=VARCHAR}
+    and id!=#{id,jdbcType=VARCHAR}
+  </select>
+  <update id="updateRoleMapper" parameterType="com.yale.zc.system.bean.SysRole" >
+    update sys_role
+    set status = #{status,jdbcType=INTEGER},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="selectSelective" parameterType="com.yale.zc.system.bean.SysRole" resultMap="BaseResultMap">
+  	select 
+    <include refid="Base_Column_List" />
+    from sys_role
+    <where>
+      <if test="name != null">
+        and name LIKE CONCAT(CONCAT('%',#{name}),'%')
+      </if>
+      <if test="status != null">
+        and status = #{status,jdbcType=INTEGER}
+      </if>
+      <if test="createdAt != null">
+        and created_at = #{createdAt,jdbcType=TIMESTAMP}
+      </if>
+      <if test="updatedAt != null">
+        and updated_at = #{updatedAt,jdbcType=TIMESTAMP}
+      </if>
+    </where>
+  </select>
+</mapper>
